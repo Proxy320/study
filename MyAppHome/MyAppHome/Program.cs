@@ -12,6 +12,8 @@ namespace MyAppHome
     {
         static void Main(string[] args)
         {
+            // Так не пойдет, давай сразу коллекцию будем делать, почитай про класс List: 
+            // var workers = new List<Worker>();
             Worker worker1 = new Worker();
             Worker worker2 = new Worker();
             Worker worker3 = new Worker();
@@ -22,6 +24,9 @@ namespace MyAppHome
             string[] FIOs;
             try
             {
+                // Давай путь вынесем в отдельную переменную\константу, либо оговорим, что файл лежит в корневом каталоге программы
+                // Вопрос: как тогда изменится путь? )
+                // Еще момент про строки, чтоб не писать "\\" можно использовать вот такой формат строки: @"D:\видео\C# 5.0. Программирование с нуля\video\моё\test.txt"
                 fin = new FileStream("D:\\видео\\C# 5.0. Программирование с нуля\\video\\моё\\test.txt", FileMode.Open);
             }
             catch (IOException exc)
@@ -34,6 +39,13 @@ namespace MyAppHome
 
             try
             {
+                
+                // Ой-Ёй! 
+                // Почему мы сотрудников в цикле-то не считываем?!
+                // Каждая строка - отдельный сотрудник, считываем в цикле до конца файла, число сотрудников = числу строк (может переменным), предусмотреть пустые строки
+                // И всю логику по чтению из файла - в отдельный класс!
+                // Добавь класс WorkerService и реализуй в нем в дальнейшем CRUD операции для сотрудников, пока что просто чтение всей сотрудников туда вынеси
+                                
                 while (!fstr_in.EndOfStream)
                 {
                     s = fstr_in.ReadLine();
@@ -130,6 +142,7 @@ namespace MyAppHome
         {
             foreach (Worker worker in workers)
             {
+                // Уже писал, с табуляцией тут проблемы, исправь
                 Console.WriteLine("Id: {0}, ФИО: {1}, номер отдела: {2}, должность: {3}, зарплата: {4} рублей, дата рождения: {5}.{6}.{7}, рабочий стаж: {8} лет, дата начало работы: {9}.{10}.{11}",
                     worker.ID, worker.FIO, worker.NuberDepartment, worker.Post, worker.Salary, worker.Day, worker.Month, worker.Year, worker.Experience, worker.EDay, worker.EMonth, worker.EYear);
             }
